@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 from fastapi import FastAPI
+import os
 
 from models.payment_mont import router as Payment_month
 from models.suscriptions import router as Suscription
@@ -10,6 +11,16 @@ from models.age import router as Age
 df = pd.read_parquet('data/Netflix Userbase.parquet')
 
 app = FastAPI()
+
+css_path = os.path.abspath("styles.css")
+
+
+##diseno CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown('<div class="container">Content goes here</div>', unsafe_allow_html=True)
+
+local_css(css_path)
 
 app.include_router(Payment_month, prefix="/Payment_month", tags=['Payment_month'])
 app.include_router(Suscription, prefix="/Suscription", tags=['Suscription'])
